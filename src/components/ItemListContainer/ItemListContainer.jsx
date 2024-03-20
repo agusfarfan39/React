@@ -1,16 +1,26 @@
-import CartWidget from "../CartWidget/CartWidget";
+import { useEffect, useState } from "react";
+import { getProducts } from "../../asyncMock";
+import ItemList from "../ItemList/ItemList";
 
-const ItemListContainer = (props) => {
+
+const ItemListContainer = ({ greeting }) => {
+    const [products, setProducts] = useState([])
+
+    useEffect(() => {
+        getProducts()
+            .then(result => {
+                setProducts(result)
+            })
+    }, [])
+
+
     return (
-        <ul className='menu'>
-            <li>{props.itemUno}</li>
-            <li>{props.itemDos}</li>
-            <li>{props.itemTres}</li>
-            <li>{props.itemCuatro}</li>
-            <li>{props.itemCinco}</li>
+        <main>
+            <h1>{greeting}</h1>
+            <ItemList products={products} />
+        </main>
 
-        </ul>
     )
 }
 
-export default ItemListContainer;
+export default ItemListContainer
